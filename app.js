@@ -34,13 +34,13 @@ const AudioEngine = {
       const gainNode = this.ctx.createGain();
       
       osc.type = 'triangle'; // Smooth, low-sensory wave
-      osc.frequency.setValueAtTime(freq, now);
       
-      gainNode.gain.setValueAtTime(0, now);
-      
-      const attackTime = 0.15; // 150ms soft attack
       const delay = index * 0.06; // Strum arpeggiator delay
+      const attackTime = 0.15; // 150ms soft attack
       
+      osc.frequency.setValueAtTime(freq, now + delay);
+      
+      gainNode.gain.setValueAtTime(0, now + delay);
       gainNode.gain.linearRampToValueAtTime(0.04, now + delay + attackTime);
       gainNode.gain.setValueAtTime(0.04, now + delay + 1.0);
       gainNode.gain.exponentialRampToValueAtTime(0.0001, now + delay + 1.8);
@@ -64,17 +64,20 @@ const AudioEngine = {
       const gainNode = this.ctx.createGain();
       
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + (index * 0.1));
       
-      gainNode.gain.setValueAtTime(0, now);
-      gainNode.gain.linearRampToValueAtTime(0.06, now + 0.1);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.4);
+      const delay = index * 0.1;
+      
+      osc.frequency.setValueAtTime(freq, now + delay);
+      
+      gainNode.gain.setValueAtTime(0, now + delay);
+      gainNode.gain.linearRampToValueAtTime(0.06, now + delay + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.4);
       
       osc.connect(gainNode);
       gainNode.connect(this.filter);
       
-      osc.start(now);
-      osc.stop(now + 0.4);
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.4);
     });
   },
 
@@ -109,17 +112,20 @@ const AudioEngine = {
       const gainNode = this.ctx.createGain();
       
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, now + (index * 0.08));
       
-      gainNode.gain.setValueAtTime(0, now + (index * 0.08));
-      gainNode.gain.linearRampToValueAtTime(0.05, now + (index * 0.08) + 0.1);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + (index * 0.08) + 0.8);
+      const delay = index * 0.08;
+      
+      osc.frequency.setValueAtTime(freq, now + delay);
+      
+      gainNode.gain.setValueAtTime(0, now + delay);
+      gainNode.gain.linearRampToValueAtTime(0.05, now + delay + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + delay + 0.8);
       
       osc.connect(gainNode);
       gainNode.connect(this.filter);
       
-      osc.start(now + (index * 0.08));
-      osc.stop(now + (index * 0.08) + 0.8);
+      osc.start(now + delay);
+      osc.stop(now + delay + 0.8);
     });
   }
 };
