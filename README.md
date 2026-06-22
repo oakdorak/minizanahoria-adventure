@@ -1,48 +1,41 @@
-# 🥕 Minizanahoria: La Aventura Adaptativa
+# 🥕 Minizanahoria Adventure
 
-Un videojuego serio terapéutico de alto rendimiento diseñado específicamente para niños en el espectro autista (TEA). El sistema enfoca sus mecánicas en la estimulación cognitiva, la atención conjunta y la autorregulación sensorial.
+> Videojuego serio interactivo y adaptativo diseñado para la estimulación cognitiva, atención conjunta y autorregulación sensorial de niños en el espectro autista (TEA).
 
----
-
-## 🧬 Objetivos Terapéuticos y de Desarrollo
-
-El software ha sido diseñado en torno a tres pilares fundamentales del desarrollo cognitivo y social en el espectro autista:
-
-1. **Atención Conjunta y Sostenida (Joint Attention)**:
-   - Mecánica de seguimiento ocular y manual para interactuar coordinadamente con el entorno.
-   - Retroalimentación audiovisual suave para mantener el foco de atención sin generar sobrecarga.
-
-2. **Secuenciación de Tareas y Rutinas Diarias (Routine Builder)**:
-   - Módulos interactivos que enseñan a estructurar secuencias lógicas paso a paso (ej. lavado de manos, cepillado de dientes, organización de objetos).
-   - Fomenta la autonomía e independencia en Actividades de la Vida Diaria (AVD).
-
-3. **Resonancia y Empatía Emocional (Emotion Resonance)**:
-   - Actividades adaptativas para identificar, decodificar y asociar expresiones emocionales básicas.
+Construido bajo principios de soberanía técnica (Local-First) y mitigación de sobrecarga cognitiva. Implementa la paleta de colores táctica Robbit y síntesis de audio procedimental basada en la escala Lidia y acordes Cmaj9 para prevenir picos de estrés sensorial.
 
 ---
 
-## 🎨 Sistema de Diseño Sensorial (Estética Robbit)
+## 🚀 Instalación y Despliegue Local
 
-Para mitigar la sobrecarga sensorial y el estrés cognitivo común en niños con sensibilidad táctil, auditiva y visual, el sistema implementa una arquitectura de diseño estricta:
+El sistema es completamente autónomo y corre localmente en el navegador (sin requerir dependencias de red):
 
-- **Paleta Táctica Robbit**:
-  - `Fondo Oscuro (#231f24)`: Reduce drásticamente la fatiga visual y la emisión de luz azul.
-  - `Acentos Lavanda (#896ab0)`: Foco interactivo calmante.
-  - `Texto Principal (#e3e0a4)`: Contraste suave y legible que evita el brillo cegador.
-  - `Verde Salvia (#a8b28a)` e `Incrustaciones Oro Muted (#9b8e6c)`: Feedback de confirmación no intrusivo.
-  
-- **Audio Lidio y Cmaj9 (Web Audio API Synthesizer)**:
-  - Generador de audio procedimental integrado mediante Web Audio API (sin archivos de audio pesados que puedan sobresaltar al usuario).
-  - Toda la retroalimentación armónica opera en acordes de `Cmaj9` y el modo `Lidio`, conocidos por sus cualidades acústicas relajantes, etéreas y libres de tensión tonal.
-  - Envolventes de ganancia suaves (ataques lentos, decaimiento progresivo) para evitar transitorios acústicos abruptos (sin ruidos agresivos ni picos de volumen).
+```bash
+git clone https://github.com/oakdorak/minizanahoria-adventure.git
+cd minizanahoria-adventure
+# Abre index.html directamente en el navegador, o ejecuta un servidor local:
+python3 -m http.server 8000
+```
+
+* **[Acceso Web Directo (Local Test)](http://localhost:8000)**
 
 ---
 
-## 🛠️ Especificaciones Técnicas
+## 📚 Documentación Profunda & Sustento Científico
 
-- **Frontend**: HTML5, Vanilla CSS, Vanilla JavaScript (Single Page Application).
-- **Audio**: Síntesis FM/Aditiva en tiempo real utilizando la Web Audio API nativa.
-- **Local-First**: 100% autónomo y almacenable localmente, no requiere conexión a internet ni llamadas a APIs externas para garantizar la privacidad absoluta del menor.
+Toda la fundamentación terapéutica, la teoría de diseño acústico armónico y la lista de artículos científicos que respaldan el desarrollo están consolidados en la biblioteca externa:
+
+* **[Sustento Científico en la Biblioteca de Alejandría](https://oakdorak.github.io/alexandria-library/)**
+* **[Especificaciones de Diseño Acústico (DESIGN.md)](DESIGN.md)**
+* **[Compilación de Referencias Científicas (REFERENCES.md)](REFERENCES.md)**
 
 ---
-*Slime Legion / MAIAH Protocol — Desarrollado con soberanía técnica y esencia artística.* 🥕💎✨
+
+## 💬 Contacto & Feedback
+
+* Telegram — [@maiah_feedback](https://t.me/maiah_feedback)
+* Mail — [crew@maiah.com](mailto:crew@maiah.com)
+
+## 📄 Licencia
+
+MIT License. Ver [LICENSE](LICENSE) para más detalles.
