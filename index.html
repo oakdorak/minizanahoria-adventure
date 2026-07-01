@@ -53,6 +53,13 @@
             <p>Secuencias Diarias</p>
           </div>
         </button>
+        <button class="nav-btn" data-game="odysseus">
+          <span class="btn-icon">🔴</span>
+          <div class="btn-text">
+            <h3>Odysseus Loop</h3>
+            <p>Bucle de 48 horas</p>
+          </div>
+        </button>
         <a href="agora.html" class="nav-btn" style="text-decoration: none; color: inherit; display: flex; align-items: center;">
           <span class="btn-icon">🔮</span>
           <div class="btn-text">
@@ -157,6 +164,43 @@
             <p class="game-feedback" id="routine-feedback">Arrastra las tarjetas en el orden correcto.</p>
           </div>
         </div>
+        <div id="game-odysseus" class="game-panel">
+          <div class="panel-header">
+            <h2>Odysseus Loop</h2>
+            <p>Un bucle de 48 horas para validar, limitar y sintetizar una idea sin perder su intención original.</p>
+          </div>
+
+          <div class="odysseus-card">
+            <div class="odysseus-card-header">
+              <span class="odysseus-pill">Espejo Rojo</span>
+              <span class="odysseus-status" id="odysseus-loop-status">Cargando bucle...</span>
+            </div>
+
+            <div class="odysseus-stage" id="odysseus-loop-stage">Perspectiva</div>
+            <p class="odysseus-prompt" id="odysseus-loop-prompt">Describe lo que ves sin juzgarlo.</p>
+
+            <div class="odysseus-progress-track" aria-hidden="true">
+              <div class="odysseus-progress-fill" id="odysseus-loop-progress-fill"></div>
+            </div>
+
+            <div class="odysseus-metrics">
+              <div>
+                <span class="metric-label">Ciclos completados</span>
+                <strong id="odysseus-loop-cycle-count">0</strong>
+              </div>
+              <div>
+                <span class="metric-label">Ventana activa</span>
+                <strong>48h</strong>
+              </div>
+            </div>
+
+            <div class="odysseus-actions">
+              <button id="odysseus-loop-advance-btn" class="primary-btn">Siguiente espejo</button>
+              <button id="odysseus-loop-reset-btn" class="secondary-btn">Reiniciar bucle</button>
+            </div>
+          </div>
+        </div>
+
       </section>
     </main>
 
