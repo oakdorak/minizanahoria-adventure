@@ -298,6 +298,7 @@ function initNavigation() {
       if (gameName === 'orbit') initFocusOrbit();
       if (gameName === 'emotion') initEmotionResonance();
       if (gameName === 'routine') initRoutineBuilder();
+      if (gameName === 'odysseus') initOdysseusLoop();
     });
   });
 
@@ -577,6 +578,19 @@ const ROUTINE_DATA = {
 let activeRoutine = 'morning';
 let routineOrder = [];
 
+const ODYSSEUS_LOOP = {
+  storageKey: 'minizanahoria_odysseus_loop',
+  durationMs: 2 * 24 * 60 * 60 * 1000,
+  stages: [
+    { name: 'Perspectiva', prompt: 'Describe lo que ves sin juzgarlo.' },
+    { name: 'Validación', prompt: 'Responde con “Sí, y...” a la emoción principal.' },
+    { name: 'Límite', prompt: 'Nombra una regla real que ayude a cuidarte.' },
+    { name: 'Síntesis', prompt: 'Une intención y límite en una acción posible.' }
+  ]
+};
+
+let odysseusLoopTimer = null;
+
 function initRoutineBuilder() {
   const routine = ROUTINE_DATA[activeRoutine];
   
@@ -708,6 +722,101 @@ document.getElementById('reset-routine-btn').addEventListener('click', () => {
   AudioEngine.playClick();
   initRoutineBuilder();
 });
+
+function readOdysseusLoopState() {
+  const stored = localStorage.getItem(ODYSSEUS_LOOP.storageKey);
+  if (stored) {
+    return JSON.parse(stored);
+  }
+
+  const state = {
+    startedAt: Date.now(),
+    stageIndex: 0,
+    cycleCount: 0,
+    completed: false
+  };
+
+  localStorage.setItem(ODYSSEUS_LOOP.storageKey, JSON.stringify(state));
+  return state;
+}
+
+function saveOdysseusLoopState(state) {
+  localStorage.setItem(ODYSSEUS_LOOP.storageKey, JSON.stringify(state));
+}
+
+function clearOdysseusLoopState() {
+  localStorage.removeItem(ODYSSEUS_LOOP.storageKey);
+}
+
+function formatOdysseusRemaining(milliseconds) {
+  const safeMs = Math.max(0, milliseconds);
+  const totalMinutes = Math.floor(safeMs / 60000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${hours}h ${minutes.toString().padStart(2, '0')}m`;
+}
+
+function renderOdysseusLoop() {
+  const state = readOdysseusLoopState();
+  const elapsed = Date.now() - state.startedAt;
+  const remaining = ODYSSEUS_LOOP.durationMs - elapsed;
+  const completed = remaining <= 0 || state.completed;
+  const stage = ODYSSEUS_LOOP.stages[state.stageIndex % ODYSSEUS_LOOP.stages.length];
+  const progress = completed ? 100 : Math.min(100, (elapsed / ODYSSEUS_LOOP.durationMs) * 100);
+
+  document.getElementById('odysseus-loop-status').innerText = completed
+    ? 'Bucle Odysseus completo.'
+    : `${formatOdysseusRemaining(remaining)} restantes`;
+  document.getElementById('odysseus-loop-stage').innerText = stage.name;
+  document.getElementById('odysseus-loop-prompt').innerText = completed
+    ? 'El ciclo de 48 horas terminó. Puedes reiniciarlo para comenzar otro bucle.'
+    : stage.prompt;
+  document.getElementById('odysseus-loop-progress-fill').style.width = `${progress}%`;
+  document.getElementById('odysseus-loop-cycle-count').innerText = state.cycleCount.toString();
+  document.getElementById('odysseus-loop-advance-btn').innerText = completed
+    ? 'Reiniciar bucle'
+    : 'Siguiente espejo';
+}
+
+function initOdysseusLoop() {
+  if (odysseusLoopTimer) {
+    clearInterval(odysseusLoopTimer);
+  }
+
+  renderOdysseusLoop();
+
+  const advanceBtn = document.getElementById('odysseus-loop-advance-btn');
+  const resetBtn = document.getElementById('odysseus-loop-reset-btn');
+
+  advanceBtn.onclick = () => {
+    AudioEngine.playClick();
+    const state = readOdysseusLoopState();
+    const elapsed = Date.now() - state.startedAt;
+
+    if (elapsed >= ODYSSEUS_LOOP.durationMs || state.completed) {
+      clearOdysseusLoopState();
+      initOdysseusLoop();
+      return;
+    }
+
+    state.stageIndex = (state.stageIndex + 1) % ODYSSEUS_LOOP.stages.length;
+    if (state.stageIndex === 0) {
+      state.cycleCount += 1;
+      triggerRewardCelebration();
+    }
+
+    saveOdysseusLoopState(state);
+    renderOdysseusLoop();
+  };
+
+  resetBtn.onclick = () => {
+    AudioEngine.playClick();
+    clearOdysseusLoopState();
+    initOdysseusLoop();
+  };
+
+  odysseusLoopTimer = setInterval(renderOdysseusLoop, 1000);
+}
 
 
 // ==========================================================================
