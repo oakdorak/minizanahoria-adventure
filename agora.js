@@ -105,66 +105,32 @@ function getMascotSVG(emotion = 'happy', status = 'normal') {
 
 // --- Audio Synthesizer (Comforting Chord Feedback) ---
 const AgoraAudio = {
-  ctx: null,
-  filter: null,
-
-  init() {
-    if (!this.ctx) {
-      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-      this.filter = this.ctx.createBiquadFilter();
-      this.filter.type = 'lowpass';
-      this.filter.frequency.setValueAtTime(1000, this.ctx.currentTime);
-      this.filter.connect(this.ctx.destination);
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-  },
-
   playStep() {
-    this.init();
-    const now = this.ctx.currentTime;
-    const osc = this.ctx.createOscillator();
-    const gainNode = this.ctx.createGain();
-    
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(329.63, now); // E4 soft chime
-    
-    gainNode.gain.setValueAtTime(0, now);
-    gainNode.gain.linearRampToValueAtTime(0.04, now + 0.05);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.5);
-    
-    osc.connect(gainNode);
-    gainNode.connect(this.filter);
-    
-    osc.start(now);
-    osc.stop(now + 0.5);
+    SharedAudio.playOscillator({
+      freq: 329.63, // E4 soft chime
+      type: 'sine',
+      delay: 0,
+      attackTime: 0.05,
+      sustainTime: 0,
+      releaseTime: 0.5,
+      peakGain: 0.04
+    });
   },
 
   playSuccess() {
-    this.init();
-    const now = this.ctx.currentTime;
     // Lydian chord of peace (C4, E4, G#4, D5)
     const notes = [261.63, 329.63, 415.30, 587.33];
     
     notes.forEach((freq, index) => {
-      const osc = this.ctx.createOscillator();
-      const gainNode = this.ctx.createGain();
-      
-      osc.type = 'triangle';
-      const delay = index * 0.08;
-      
-      osc.frequency.setValueAtTime(freq, now + delay);
-      
-      gainNode.gain.setValueAtTime(0, now + delay);
-      gainNode.gain.linearRampToValueAtTime(0.05, now + delay + 0.15);
-      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + delay + 1.5);
-      
-      osc.connect(gainNode);
-      gainNode.connect(this.filter);
-      
-      osc.start(now + delay);
-      osc.stop(now + delay + 1.5);
+      SharedAudio.playOscillator({
+        freq: freq,
+        type: 'triangle',
+        delay: index * 0.08,
+        attackTime: 0.15,
+        sustainTime: 0,
+        releaseTime: 1.5,
+        peakGain: 0.05
+      });
     });
   }
 };
