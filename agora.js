@@ -230,6 +230,11 @@ function loadPersistedData() {
     // Merge parsed config with State.config
     State.config = { ...State.config, ...parsedConfig };
 
+    // Make sure we clear the apiKey from state if it somehow got loaded from parsedConfig (which it just did via spread!)
+    if (State.config.apiKey) {
+        State.config.apiKey = ''; // Reset to empty unless overridden by sessionStorage below
+    }
+
     document.getElementById('provider-select').value = State.config.provider || '';
     document.getElementById('api-url').value = State.config.apiUrl || '';
     document.getElementById('model-name').value = State.config.modelName || '';
