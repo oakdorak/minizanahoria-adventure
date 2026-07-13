@@ -103,19 +103,6 @@ function getMascotSVG(emotion = 'happy', status = 'normal') {
   `;
 }
 
-function escapeHTML(str) {
-  if (!str) return str;
-  return String(str).replace(/[&<>'"]/g,
-    tag => ({
-      '&': '&amp;',
-      '<': '&lt;',
-      '>': '&gt;',
-      "'": '&#39;',
-      '"': '&quot;'
-    }[tag] || tag)
-  );
-}
-
 // --- Audio Synthesizer (Comforting Chord Feedback) ---
 const AgoraAudio = {
   ctx: null,
@@ -506,9 +493,20 @@ async function startMirroring() {
   }
   
   // Populate content
-  document.getElementById('mirror-red-content').innerHTML = `<p>${escapeHTML(result.red)}</p>`;
-  document.getElementById('mirror-blue-content').innerHTML = `<p>${escapeHTML(result.blue)}</p>`;
-  document.getElementById('mirror-green-content').innerHTML = `<p>${escapeHTML(result.green)}</p>`;
+  const redP = document.createElement('p');
+  redP.textContent = result.red;
+  document.getElementById('mirror-red-content').innerHTML = '';
+  document.getElementById('mirror-red-content').appendChild(redP);
+
+  const blueP = document.createElement('p');
+  blueP.textContent = result.blue;
+  document.getElementById('mirror-blue-content').innerHTML = '';
+  document.getElementById('mirror-blue-content').appendChild(blueP);
+
+  const greenP = document.createElement('p');
+  greenP.textContent = result.green;
+  document.getElementById('mirror-green-content').innerHTML = '';
+  document.getElementById('mirror-green-content').appendChild(greenP);
   
   // Play comforting success arpeggio
   AgoraAudio.playSuccess();
@@ -541,17 +539,41 @@ function updateLibraryUI() {
     // Convert gamified level to stars
     const stars = "🌟".repeat(item.level || 1);
     
-    itemEl.innerHTML = `
-      <div class="item-meta">
-        <span>${escapeHTML(item.timestamp)}</span>
-        <span>Evolución: ${escapeHTML(stars)}</span>
-      </div>
-      <div class="item-concept">Concepto Original: "${escapeHTML(item.concept)}"</div>
-      <div class="item-synthesis">Evolución Sellada: ${escapeHTML(item.green)}</div>
-      <div class="item-actions">
-        <button class="cleanse-btn" onclick="deleteLibraryItem(${State.library.length - 1 - index})">Purgar</button>
-      </div>
-    `;
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'item-meta';
+
+    const timeSpan = document.createElement('span');
+    timeSpan.textContent = item.timestamp;
+
+    const evoSpan = document.createElement('span');
+    evoSpan.textContent = `Evolución: ${stars}`;
+
+    metaDiv.appendChild(timeSpan);
+    metaDiv.appendChild(evoSpan);
+
+    const conceptDiv = document.createElement('div');
+    conceptDiv.className = 'item-concept';
+    conceptDiv.textContent = `Concepto Original: "${item.concept}"`;
+
+    const synthDiv = document.createElement('div');
+    synthDiv.className = 'item-synthesis';
+    synthDiv.textContent = `Evolución Sellada: ${item.green}`;
+
+    const actionsDiv = document.createElement('div');
+    actionsDiv.className = 'item-actions';
+
+    const btn = document.createElement('button');
+    btn.className = 'cleanse-btn';
+    btn.textContent = 'Purgar';
+    btn.onclick = () => deleteLibraryItem(State.library.length - 1 - index);
+
+    actionsDiv.appendChild(btn);
+
+    itemEl.innerHTML = '';
+    itemEl.appendChild(metaDiv);
+    itemEl.appendChild(conceptDiv);
+    itemEl.appendChild(synthDiv);
+    itemEl.appendChild(actionsDiv);
     list.appendChild(itemEl);
   });
 }
