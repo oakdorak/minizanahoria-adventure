@@ -717,3 +717,7 @@ window.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initFocusOrbit(); // Default game on startup
 });
+
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { getMascotSVG };
+}
