@@ -1,0 +1,3 @@
+Extracted the duplicated getMascotSVG function from app.js and agora.js into a shared_mascot.js file. I combined the logic for 'gazeDirection' (app.js) and 'status' (agora.js) into a unified 'modifier' parameter that supports both cases.
+
+I then updated index.html and agora.html to include shared_mascot.js before their main scripts.
