@@ -2,6 +2,20 @@
    EL ÁGORA DE LA SOBERANÍA - MURO DE LOS ESPEJOS - APPLICATION LOGIC
    ========================================================================== */
 
+// --- Security Utilities ---
+function escapeHTML(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>'"]/g,
+    tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag)
+  );
+}
+
 // --- Mascot SVG Generator (Adapted for Agora with unique states) ---
 function getMascotSVG(emotion = 'happy', status = 'normal') {
   let headRotation = 0;
@@ -493,9 +507,9 @@ async function startMirroring() {
   }
   
   // Populate content
-  document.getElementById('mirror-red-content').innerHTML = `<p>${result.red}</p>`;
-  document.getElementById('mirror-blue-content').innerHTML = `<p>${result.blue}</p>`;
-  document.getElementById('mirror-green-content').innerHTML = `<p>${result.green}</p>`;
+  document.getElementById('mirror-red-content').innerHTML = `<p>${escapeHTML(result.red)}</p>`;
+  document.getElementById('mirror-blue-content').innerHTML = `<p>${escapeHTML(result.blue)}</p>`;
+  document.getElementById('mirror-green-content').innerHTML = `<p>${escapeHTML(result.green)}</p>`;
   
   // Play comforting success arpeggio
   AgoraAudio.playSuccess();
@@ -533,8 +547,8 @@ function updateLibraryUI() {
         <span>${item.timestamp}</span>
         <span>Evolución: ${stars}</span>
       </div>
-      <div class="item-concept">Concepto Original: "${item.concept}"</div>
-      <div class="item-synthesis">Evolución Sellada: ${item.green}</div>
+      <div class="item-concept">Concepto Original: "${escapeHTML(item.concept)}"</div>
+      <div class="item-synthesis">Evolución Sellada: ${escapeHTML(item.green)}</div>
       <div class="item-actions">
         <button class="cleanse-btn" onclick="deleteLibraryItem(${State.library.length - 1 - index})">Purgar</button>
       </div>
