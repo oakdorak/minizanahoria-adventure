@@ -289,6 +289,7 @@ function updateStatusUI() {
 }
 
 // --- Stepper Navigation ---
+const stepNodesCache = [];
 function goToStep(step) {
   State.currentStep = step;
   AgoraAudio.playStep();
@@ -301,7 +302,11 @@ function goToStep(step) {
   
   // Update step nodes
   for (let i = 1; i <= 3; i++) {
-    const node = document.getElementById(`step-node-${i}`);
+    let node = stepNodesCache[i];
+    if (!node) {
+      node = document.getElementById(`step-node-${i}`);
+      stepNodesCache[i] = node;
+    }
     node.className = "step-node";
     if (i < step) {
       node.classList.add('completed');
