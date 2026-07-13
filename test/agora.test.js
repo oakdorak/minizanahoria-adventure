@@ -35,8 +35,8 @@ global.document = {
 const { runMockSemanticProcessing, MockDialogues, FallbackDialogue } = require('../agora.js');
 
 test('runMockSemanticProcessing', async (t) => {
-  await t.test('Happy path: keyword "trampa"', () => {
-    const result = runMockSemanticProcessing('quiero hacer una trampa');
+  await t.test('Happy path: keyword "jugar"', () => {
+    const result = runMockSemanticProcessing('quiero jugar a algo');
     assert.deepEqual(result, {
       red: MockDialogues[0].red,
       blue: MockDialogues[0].blue,
@@ -44,8 +44,8 @@ test('runMockSemanticProcessing', async (t) => {
     });
   });
 
-  await t.test('Case insensitivity: keyword "TrAmPa"', () => {
-    const result = runMockSemanticProcessing('quiero hacer una TrAmPa');
+  await t.test('Case insensitivity: keyword "MiNeCrAfT"', () => {
+    const result = runMockSemanticProcessing('quiero jugar MiNeCrAfT');
     assert.deepEqual(result, {
       red: MockDialogues[0].red,
       blue: MockDialogues[0].blue,
