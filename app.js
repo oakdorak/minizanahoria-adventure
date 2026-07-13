@@ -636,6 +636,9 @@ function initRoutineBuilder() {
   document.getElementById('routine-feedback').innerText = "Arrastra las tarjetas en el orden correcto.";
 }
 
+// Allow dropping back to the source deck
+const cardsSourceDeck = document.getElementById('routine-cards-container');
+
 function handleDropOnSlot(e, slot) {
   slot.classList.remove('dragover');
   const draggingCard = document.querySelector('.routine-card.dragging');
@@ -646,15 +649,13 @@ function handleDropOnSlot(e, slot) {
     // Check if slot has children. If yes, move existing child back to source.
     if (slot.children.length > 0) {
       const existingCard = slot.children[0];
-      document.getElementById('routine-cards-container').appendChild(existingCard);
+      cardsSourceDeck.appendChild(existingCard);
     }
     
     slot.appendChild(draggingCard);
   }
 }
 
-// Allow dropping back to the source deck
-const cardsSourceDeck = document.getElementById('routine-cards-container');
 cardsSourceDeck.addEventListener('dragover', e => e.preventDefault());
 cardsSourceDeck.addEventListener('drop', () => {
   const draggingCard = document.querySelector('.routine-card.dragging');
