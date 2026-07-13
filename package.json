@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "> Videojuego serio interactivo y adaptativo diseñado para la estimulación cognitiva, atención conjunta y autorregulación sensorial de niños en el espectro autista (TEA).",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oakdorak/minizanahoria-adventure.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/oakdorak/minizanahoria-adventure/issues"
+  },
+  "homepage": "https://github.com/oakdorak/minizanahoria-adventure#readme",
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "jest-environment-jsdom": "^30.4.1"
+  }
+}
