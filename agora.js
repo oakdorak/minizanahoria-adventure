@@ -669,3 +669,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // Default to step 1
   goToStep(1);
 });
+
+// --- Exports for Testing ---
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    runMockSemanticProcessing,
+    MockDialogues,
+    FallbackDialogue
+  };
+}
