@@ -669,3 +669,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // Default to step 1
   goToStep(1);
 });
+
+// Export for testing
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    getMascotSVG
+  };
+}
