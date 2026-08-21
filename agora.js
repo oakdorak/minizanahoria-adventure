@@ -144,8 +144,8 @@ const AgoraAudio = {
   playSuccess() {
     this.init();
     const now = this.ctx.currentTime;
-    // Lydian chord of peace (C4, E4, G#4, D5)
-    const notes = [261.63, 329.63, 415.30, 587.33];
+    // Lydian chord of peace (C4, E4, F#4, D5)
+    const notes = [261.63, 329.63, 369.99, 587.33];
     
     notes.forEach((freq, index) => {
       const osc = this.ctx.createOscillator();
